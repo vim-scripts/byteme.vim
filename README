@@ -1,0 +1,17 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=268
+
+A few years ago I had to write a streaming single-page to multi-page TIFF converter.  Doing so required that I spend a lot of time wondering around in a HEX editor looking at the bytes that made up the TIFF headers.  The biggest part to tweaking the image files was getting all of the offsets calculated correctly.
+
+I was using MultiEdit for an editor at the time and needed "Goto Hex Offset" functionality that ME didn't have so I wrote a cmac function to do it for me.  It's purpose was to take me to a specified _byte_ in _me_ (MultiEdit) hence I named the function "ByteMe".
+
+A few months ago, I started using VIM.  Once again I needed "Goto Hex Offset" functionality which VIM did not have.  So, I rewrote my cmac ByteMe functionality in VIM and the result was this byteme.vim plugin.
+
+I'm fairly new to VIM so I expect my code could be much, much simpler, but this at least works for now.
+
+I wrote this on a Win2000 box using GVim 6.0 and have since upgraded to GVim 6.1 with no effect to byteme.vim.  I also tested it in gvim 6.0 running in Red Hat Linux 7.2 and it appeared to work ok (after passing it through dos2unix).  I even tested it in vim 6.0 on Red Hat Linux 7.2 and the byteme.vim functionality works but I have not figured out how to make the key mapping work.  I could only fire off the function using ":call ByteMe()".
+
+I am using the xxd utility to generate the hex.  For anyone who might not have xxd on your Windows box, I got mine by downloading and installing Cygwin and then adding c:\cygwin\bin to my path. (Little warning about installing cygwin and then putting it at the beginning of your windows path. At least for me, this breaks my vim ftp functionality every time.  I keep getting this 'bad port' error.  To fix it, I just go to ...\cygwin\bin\ftp.exe and rename it to ...\cygwin_ftp.exe.  That forces vim to use the default Windows ftp and fixes the 'bad port' error. If I want to use the cygwin ftp, I just type cygwin_ftp.)
+
+byteme.vim is written to use the format returned by the generic xxd hex dump.  If you use any switches to get xxd to change the format, or use some other utility to generate the hex, you'll probably have to rewrite byteme.vim.
+
+To use: Once you have installed the plugin, reopen VIM, open the file you plan to view, convert to hex, hit <M-g> (Alt-g on a Windows style keyboard), enter the new offset in hex (e.g. fe09), hit enter, and you should be there.  An entry containing non-valid hex chars (e.g. fgtr) should take you to byte 0.  If the offset you enter is past then end of your file, you should end up at the end of the file but without any major error/warning so pay attention.
