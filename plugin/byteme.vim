@@ -1,3 +1,79 @@
+"=============================================================================
+"    Copyright: Copyright (C) 2002 Robert Roberts
+"               Permission is hereby granted to use and distribute this code,
+"               with or without modifications, provided that this copyright
+"               notice is copied with it. Like anything else that's free,
+"               bytme.vim is provided *as is* and comes with no
+"               warranty of any kind, either expressed or implied. In no
+"               event will the copyright holder be liable for any damamges
+"               resulting from the use of this software.
+" Name Of File: bytme.vim
+"  Description: Goto Hex Offset Vim Plugin
+"   Maintainer: Robert Roberts (res02ot0@gte.net)
+"          URL: None
+"  Last Change: 04-09-2002 10:18hrs
+"      Version: 0.0.2
+"        Usage: Normally, this file should reside in the plugins directory. 
+"               If not, you must manually source this file using 
+"                  :source /thepath/byteme.vim
+"
+"               You may use the default keymappings of
+"
+"                 <M-g>  - Prompts for new offset.
+"
+"      History: The only difference between version 0.0.1 and 0.0.2 is that I
+"               forgot to add this description block and any instructions in
+"               version 0.0.1 and vim.sr.net only allows new versions, not 
+"               refreshes of existing versions.
+"=============================================================================
+"
+" Vim.sf.net Summary:   Goto Hex Offset
+"
+" Vim.sf.net Description:
+"
+"       A few years ago I had to write a streaming single-page to multi-page 
+"       TIFF converter.  Doing so required that I spend a lot of time 
+"       wondering around in a HEX editor looking at the bytes that made up the 
+"       TIFF headers.  The biggest part to tweaking the image files was 
+"       getting all of the offsets calculated correctly. 
+
+"       I was using MultiEdit for an editor at the time and needed "Goto Hex 
+"       Offset" functionality that ME didn't have so I wrote a cmac function 
+"       to do it for me.  It's purpose was to take me to a specified _byte_ 
+"       in _me_ (MultiEdit) hence I named the function "ByteMe". 
+
+"       A few months ago, I started using VIM.  Once again I needed "Goto Hex 
+"       Offset" functionality which VIM did not have.  So, I rewrote my cmac 
+"       ByteMe functionality in VIM and the result was this byteme.vim plugin. 
+
+"       I'm fairly new to VIM so I expect my code could be much, much simpler, 
+"       but this at least works for now. 
+
+"       I wrote this on a Win2000 box using GVim 6.0 and have since upgraded 
+"       to GVim 6.1 with no effect to byteme.vim. 
+
+"       I am using the xxd utility to generate the hex.  For anyone who might 
+"       not have xxd on your Windows box, I got mine by downloading and 
+"       installing Cygwin and then adding c:\cygwin\bin to my path. 
+
+"       byteme.vim is written to use the format returned by the generic xxd 
+"       hex dump.  If you use any switched to get xxd to change the format, 
+"       or use some other utility to generate the hex, you'll probably have to 
+"       rewrite byteme.vim. 
+
+"       To use: Once you have installed the plugin, reopen VIM, open the file 
+"       you plan to view, convert to hex, hit <Alt-g>, enter the new offset in 
+"       hex (e.g. fe09), hit enter, and you should be there.  An entry 
+"       containing non-valid hex chars (e.g. fgtr) should take you to byte 0.  
+"       If the offset you enter is past then end of your file, you should end 
+"       up at the end of the file but without any major error/warning so pay 
+"       attention. 
+ 
+" Install Details 
+"       Just drop byteme.vim in your plugin directory.  If you do NOT want the 
+"       default keymap to use <M-g> (Alt-g), edit byteme.vim. 
+
+" =================================================================================================
 " Goto hex offset.  Will prompt for new hex value.
 noremap <M-g> :call ByteMe()<CR>
 
